@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimentações - Controle de Estoque</title>
+    <meta name="description" content="Controle de entrada e saída de equipamentos">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📦 ControleStock</h1>
+                <p>Gestão de Equipamentos</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="equipamentos.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    Equipamentos
+                </a>
+                <a href="fornecedores.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                    </svg>
+                    Fornecedores
+                </a>
+                <a href="movimentacoes.html" class="nav-item active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Movimentações
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>Movimentações de Estoque</h2>
+                <p>Controle de entrada e saída de equipamentos</p>
+            </div>
+
+            <!-- Formulário de Movimentação -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">➕ Registrar Nova Movimentação</h3>
+                </div>
+                <form id="form-movimentacao">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="tipo-movimentacao">Tipo de Movimentação *</label>
+                            <select class="form-select" id="tipo-movimentacao" required>
+                                <option value="">Selecione...</option>
+                                <option value="entrada">📥 Entrada</option>
+                                <option value="saida">📤 Saída</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="equipamento-movimentacao">Equipamento *</label>
+                            <select class="form-select" id="equipamento-movimentacao" required>
+                                <option value="">Selecione um equipamento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="condicao">Condição *</label>
+                            <select class="form-select" id="condicao" required>
+                                <option value="">Selecione...</option>
+                                <option value="novo">Novo</option>
+                                <option value="usado">Usado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="quantidade">Quantidade *</label>
+                            <input type="number" class="form-input" id="quantidade" min="1" required placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="data-movimentacao">Data *</label>
+                            <input type="date" class="form-input" id="data-movimentacao" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="responsavel">Responsável *</label>
+                            <input type="text" class="form-input" id="responsavel" required
+                                placeholder="Nome do responsável">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="observacao">Observação</label>
+                        <textarea class="form-textarea" id="observacao"
+                            placeholder="Informações adicionais sobre a movimentação..."></textarea>
+                    </div>
+                    <div class="flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Registrar Movimentação
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="limparFormularioMovimentacao()">
+                            Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card mb-3">
+                <div class="flex gap-2">
+                    <div class="form-group" style="flex: 1;">
+                        <input type="text" class="form-input" id="busca-movimentacao"
+                            placeholder="🔍 Buscar por equipamento ou responsável...">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-select" id="filtro-tipo">
+                            <option value="">Todos os tipos</option>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-input" id="filtro-data-inicio" placeholder="Data início">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-input" id="filtro-data-fim" placeholder="Data fim">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico de Movimentações -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📊 Histórico de Movimentações</h3>
+                    <span id="total-movimentacoes" class="badge badge-info">0 movimentações</span>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Equipamento</th>
+                                <th>Condição</th>
+                                <th>Quantidade</th>
+                                <th>Responsável</th>
+                                <th>Observação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-movimentacoes">
+                            <tr>
+                                <td colspan="8" class="text-center" style="padding: 2rem; color: var(--gray);">
+                                    Nenhuma movimentação registrada
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Definir data atual como padrão
+        document.getElementById('data-movimentacao').valueAsDate = new Date();
+
+        // Carregar ao iniciar
+        document.addEventListener('DOMContentLoaded', function () {
+            carregarEquipamentosSelectMovimentacao();
+            carregarMovimentacoes();
+
+            // Event listeners
+            document.getElementById('form-movimentacao').addEventListener('submit', salvarMovimentacao);
+            document.getElementById('busca-movimentacao').addEventListener('input', filtrarMovimentacoes);
+            document.getElementById('filtro-tipo').addEventListener('change', filtrarMovimentacoes);
+            document.getElementById('filtro-data-inicio').addEventListener('change', filtrarMovimentacoes);
+            document.getElementById('filtro-data-fim').addEventListener('change', filtrarMovimentacoes);
+        });
+    </script>
+</body>
+
+</html>

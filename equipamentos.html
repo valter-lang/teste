@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamentos - Controle de Estoque</title>
+    <meta name="description" content="Gerenciamento de equipamentos">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📦 ControleStock</h1>
+                <p>Gestão de Equipamentos</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="equipamentos.html" class="nav-item active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    Equipamentos
+                </a>
+                <a href="fornecedores.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                    Fornecedores
+                </a>
+                <a href="movimentacoes.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Movimentações
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>Equipamentos</h2>
+                <p>Gerenciamento completo de equipamentos do estoque</p>
+            </div>
+
+            <!-- Formulário de Cadastro -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">➕ Cadastrar Novo Equipamento</h3>
+                </div>
+                <form id="form-equipamento">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="codigo">Código *</label>
+                            <input type="text" class="form-input" id="codigo" required placeholder="Ex: 100261">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nome">Nome do Equipamento *</label>
+                            <input type="text" class="form-input" id="nome" required placeholder="Ex: ARMÁRIO 40X60 (UN)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="fornecedor">Fornecedor *</label>
+                            <select class="form-select" id="fornecedor" required>
+                                <option value="">Selecione um fornecedor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="custo">Custo Unitário (R$) *</label>
+                            <input type="number" class="form-input" id="custo" step="0.01" required placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="qtd-novos">Quantidade Novos</label>
+                            <input type="number" class="form-input" id="qtd-novos" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="qtd-usados">Quantidade Usados</label>
+                            <input type="number" class="form-input" id="qtd-usados" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="estoque-minimo">Estoque Mínimo *</label>
+                            <input type="number" class="form-input" id="estoque-minimo" required value="10" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="compras-chegar">Compras a Chegar</label>
+                            <input type="number" class="form-input" id="compras-chegar" value="0" min="0">
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Cadastrar Equipamento
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="limparFormulario()">
+                            Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Busca e Filtros -->
+            <div class="card mb-3">
+                <div class="flex gap-2">
+                    <div class="form-group" style="flex: 1;">
+                        <input type="text" class="form-input" id="busca" placeholder="🔍 Buscar por código ou nome...">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-select" id="filtro-fornecedor">
+                            <option value="">Todos os fornecedores</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-select" id="filtro-status">
+                            <option value="">Todos os status</option>
+                            <option value="ok">OK</option>
+                            <option value="baixo">Estoque Baixo</option>
+                            <option value="critico">Crítico</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Equipamentos -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Lista de Equipamentos</h3>
+                    <span id="total-equipamentos-lista" class="badge badge-info">0 equipamentos</span>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Produto</th>
+                                <th>Novos</th>
+                                <th>Usados</th>
+                                <th>Atual</th>
+                                <th>Mínimo</th>
+                                <th>Custo</th>
+                                <th>Compras</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-equipamentos">
+                            <tr>
+                                <td colspan="10" class="text-center" style="padding: 2rem; color: var(--gray);">
+                                    Nenhum equipamento cadastrado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modal-editar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Equipamento</h3>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
+            </div>
+            <form id="form-editar">
+                <input type="hidden" id="edit-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="edit-codigo">Código</label>
+                        <input type="text" class="form-input" id="edit-codigo" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-nome">Nome</label>
+                        <input type="text" class="form-input" id="edit-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-fornecedor">Fornecedor</label>
+                        <select class="form-select" id="edit-fornecedor" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-custo">Custo (R$)</label>
+                        <input type="number" class="form-input" id="edit-custo" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-qtd-novos">Novos</label>
+                        <input type="number" class="form-input" id="edit-qtd-novos" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-qtd-usados">Usados</label>
+                        <input type="number" class="form-input" id="edit-qtd-usados" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-estoque-minimo">Mínimo</label>
+                        <input type="number" class="form-input" id="edit-estoque-minimo" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-compras-chegar">Compras</label>
+                        <input type="number" class="form-input" id="edit-compras-chegar" min="0">
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Carregar ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarFornecedoresSelect();
+            carregarEquipamentos();
+            
+            // Event listeners
+            document.getElementById('form-equipamento').addEventListener('submit', salvarEquipamento);
+            document.getElementById('form-editar').addEventListener('submit', atualizarEquipamento);
+            document.getElementById('busca').addEventListener('input', filtrarEquipamentos);
+            document.getElementById('filtro-fornecedor').addEventListener('change', filtrarEquipamentos);
+            document.getElementById('filtro-status').addEventListener('change', filtrarEquipamentos);
+        });
+    </script>
+</body>
+</html>

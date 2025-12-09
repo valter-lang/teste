@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fornecedores - Controle de Estoque</title>
+    <meta name="description" content="Gerenciamento de fornecedores">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📦 ControleStock</h1>
+                <p>Gestão de Equipamentos</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="equipamentos.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    Equipamentos
+                </a>
+                <a href="fornecedores.html" class="nav-item active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                    </svg>
+                    Fornecedores
+                </a>
+                <a href="movimentacoes.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Movimentações
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>Fornecedores</h2>
+                <p>Gerenciamento de fornecedores de equipamentos</p>
+            </div>
+
+            <!-- Formulário de Cadastro -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">➕ Cadastrar Novo Fornecedor</h3>
+                </div>
+                <form id="form-fornecedor">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="nome-fornecedor">Nome do Fornecedor *</label>
+                            <input type="text" class="form-input" id="nome-fornecedor" required
+                                placeholder="Ex: Equipamentos XYZ Ltda">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cnpj">CNPJ *</label>
+                            <input type="text" class="form-input" id="cnpj" required placeholder="00.000.000/0000-00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contato">Nome do Contato</label>
+                            <input type="text" class="form-input" id="contato" placeholder="Ex: João Silva">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">E-mail</label>
+                            <input type="email" class="form-input" id="email" placeholder="contato@fornecedor.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="telefone">Telefone</label>
+                            <input type="tel" class="form-input" id="telefone" placeholder="(00) 00000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="endereco">Endereço</label>
+                            <input type="text" class="form-input" id="endereco" placeholder="Rua, número, bairro">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="observacoes">Observações</label>
+                        <textarea class="form-textarea" id="observacoes"
+                            placeholder="Informações adicionais sobre o fornecedor..."></textarea>
+                    </div>
+                    <div class="flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Cadastrar Fornecedor
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="limparFormularioFornecedor()">
+                            Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Busca -->
+            <div class="card mb-3">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="busca-fornecedor"
+                        placeholder="🔍 Buscar por nome ou CNPJ...">
+                </div>
+            </div>
+
+            <!-- Lista de Fornecedores -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Lista de Fornecedores</h3>
+                    <span id="total-fornecedores" class="badge badge-info">0 fornecedores</span>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CNPJ</th>
+                                <th>Contato</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Equipamentos</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-fornecedores">
+                            <tr>
+                                <td colspan="7" class="text-center" style="padding: 2rem; color: var(--gray);">
+                                    Nenhum fornecedor cadastrado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modal-editar-fornecedor" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Fornecedor</h3>
+                <button class="modal-close" onclick="fecharModalFornecedor()">&times;</button>
+            </div>
+            <form id="form-editar-fornecedor">
+                <input type="hidden" id="edit-fornecedor-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="edit-nome-fornecedor">Nome</label>
+                        <input type="text" class="form-input" id="edit-nome-fornecedor" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-cnpj">CNPJ</label>
+                        <input type="text" class="form-input" id="edit-cnpj" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-contato">Contato</label>
+                        <input type="text" class="form-input" id="edit-contato">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-email">E-mail</label>
+                        <input type="email" class="form-input" id="edit-email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-telefone">Telefone</label>
+                        <input type="tel" class="form-input" id="edit-telefone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-endereco">Endereço</label>
+                        <input type="text" class="form-input" id="edit-endereco">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="edit-observacoes">Observações</label>
+                    <textarea class="form-textarea" id="edit-observacoes"></textarea>
+                </div>
+                <div class="flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalFornecedor()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Carregar ao iniciar
+        document.addEventListener('DOMContentLoaded', function () {
+            carregarFornecedores();
+
+            // Event listeners
+            document.getElementById('form-fornecedor').addEventListener('submit', salvarFornecedor);
+            document.getElementById('form-editar-fornecedor').addEventListener('submit', atualizarFornecedor);
+            document.getElementById('busca-fornecedor').addEventListener('input', filtrarFornecedores);
+        });
+    </script>
+</body>
+
+</html>
