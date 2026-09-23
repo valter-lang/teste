@@ -23,6 +23,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   serverExternalPackages: ['pg', 'exceljs', 'pptxgenjs', 'playwright-core', 'bcryptjs'],
   experimental: {
     serverActions: { bodySizeLimit: '12mb' },
