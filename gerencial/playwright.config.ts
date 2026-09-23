@@ -13,14 +13,15 @@ export default defineConfig({
     timezoneId: 'America/Sao_Paulo',
   },
   webServer: {
-    command: `npx next dev -p ${PORTA}`,
+    command: `npx next build && npx next start -p ${PORTA}`,
     port: PORTA,
-    timeout: 180_000,
+    timeout: 600_000,
     reuseExistingServer: true,
     env: {
       DATABASE_URL: process.env.E2E_DATABASE_URL ?? 'postgres://gerencial:gerencial@localhost:5432/gerencial_e2e',
       SESSION_SECRET: process.env.SESSION_SECRET ?? 'e2e-segredo-e2e-segredo-e2e-segredo-e2e',
       APP_ENV: 'development',
+      NODE_ENV: 'production',
       NEXT_DIST_DIR: '.next-e2e',
     },
   },

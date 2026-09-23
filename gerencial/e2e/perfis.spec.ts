@@ -14,7 +14,7 @@ test('login inválido mostra erro genérico', async ({ page }) => {
   await page.getByLabel('E-mail').fill('diretoria@demo.local')
   await page.getByLabel('Senha').fill('errada-123456')
   await page.getByRole('button', { name: 'Entrar' }).click()
-  await expect(page.getByRole('alert')).toContainText('E-mail ou senha inválidos')
+  await expect(page.getByText('E-mail ou senha inválidos.')).toBeVisible()
 })
 
 test('sem sessão, páginas redirecionam ao login e APIs respondem 401', async ({ page, request }) => {
