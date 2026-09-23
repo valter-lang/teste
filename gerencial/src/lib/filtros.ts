@@ -24,3 +24,11 @@ export function paramInteiro(v: string | string[] | undefined, padrao: number): 
 }
 
 export type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+/** Competências disponíveis no seletor: jan/2025 até o mês atual (mais recente primeiro). */
+export function opcoesCompetencia(): string[] {
+  const atual = competenciaAtual()
+  const out: string[] = []
+  for (let c = atual; c >= '2025-01-01'; c = somarMeses(c, -1)) out.push(c)
+  return out
+}

@@ -39,7 +39,8 @@ html {
 body {
   min-height: 100vh;
 }
-h1, h2, h3, .font-titulo {
+h1, h2, h3, .font-titulo { font-family: var(--font-titulo); }
+h1, h2, h3 {
   font-family: var(--font-titulo);
   color: var(--color-tinta);
 }
