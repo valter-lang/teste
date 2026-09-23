@@ -193,7 +193,7 @@ const SERIES: Record<SerieCodigo, DefSerie> = {
 
 function tiSql(filtro: string, d: Dimensao | null) {
   const expr: Record<string, string> = {
-    STATUS: `t.status`, CATEGORIA: `coalesce(nullif(t.categoria,''), 'Não informado')`,
+    STATUS: `t.status`, CATEGORIA: `coalesce(nullif(t.categoria,''), case when t.sistema_origem = 'LINEAR' then 'Linear/OPIVA (desenvolvimento)' else 'Não informado' end)`,
     PRIORIDADE: `coalesce(nullif(t.prioridade,''), 'Não informado')`, SISTEMA_ORIGEM: `t.sistema_origem`, TIPO: `coalesce(nullif(t.tipo,''), 'Não informado')`,
   }
   return `select t.competencia::text as competencia, ${d ? expr[d] : 'null'} as dimensao, count(*)::float8 as valor
