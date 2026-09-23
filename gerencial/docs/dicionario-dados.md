@@ -106,6 +106,7 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | abrangencia | text | não | 'NACIONAL'::text |
 | unidade_id | integer | sim |  |
 | meio_periodo | boolean | não | false |
+| ativo | boolean | não | true |
 
 **Regras (CHECK):**
 
@@ -315,6 +316,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -342,6 +347,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -461,6 +470,9 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | motivo_insucesso | text | sim |  |
 | criado_por | uuid | sim |  |
 | criado_em | timestamp with time zone | não | now() |
+| excluido_em | timestamp with time zone | sim |  |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
 
 **Regras (CHECK):**
 
@@ -581,6 +593,7 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 |---|---|---|---|
 | alias | text | não |  |
 | familia_id | integer | não |  |
+| ativo | boolean | não | true |
 
 **Triggers:** familia_equipamento_alias_aud
 
@@ -844,6 +857,9 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | quantidade_planejada | integer | não |  |
 | criado_por | uuid | sim |  |
 | criado_em | timestamp with time zone | não | now() |
+| excluido_em | timestamp with time zone | sim |  |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
 
 **Regras (CHECK):**
 
@@ -1175,6 +1191,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -1203,6 +1223,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -1232,6 +1256,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -1252,6 +1280,9 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | minutos_programados | integer | não |  |
 | criado_por | uuid | sim |  |
 | criado_em | timestamp with time zone | não | now() |
+| excluido_em | timestamp with time zone | sim |  |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
 
 **Regras (CHECK):**
 
@@ -1276,6 +1307,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -1295,6 +1330,9 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | aplicados_ate_30_dias | integer | não |  |
 | criado_por | uuid | sim |  |
 | criado_em | timestamp with time zone | não | now() |
+| excluido_em | timestamp with time zone | sim |  |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
 
 **Regras (CHECK):**
 
@@ -1320,6 +1358,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 
@@ -1354,6 +1396,10 @@ Gerado por `scripts/gerar-docs.ts` a partir do esquema aplicado pelas migrations
 | criado_em | timestamp with time zone | não | now() |
 | excluido_em | timestamp with time zone | sim |  |
 | versao | integer | não | 1 |
+| excluido_por | uuid | sim |  |
+| motivo_exclusao | text | sim |  |
+| atualizado_por | uuid | sim |  |
+| atualizado_em | timestamp with time zone | não | now() |
 
 **Regras (CHECK):**
 

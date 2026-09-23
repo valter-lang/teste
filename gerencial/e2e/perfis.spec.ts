@@ -17,6 +17,16 @@ test('login inválido mostra erro genérico', async ({ page }) => {
   await expect(page.getByText('E-mail ou senha inválidos.')).toBeVisible()
 })
 
+test('cinco senhas erradas bloqueiam temporariamente a conta', async ({ page }) => {
+  for (let i = 0; i < 5; i++) {
+    await page.goto('/login')
+    await page.getByLabel('E-mail').fill('auditor.bloqueio@demo.local')
+    await page.getByLabel('Senha').fill('errada-123456')
+    await page.getByRole('button', { name: 'Entrar' }).click()
+    await expect(page.getByText(/inválidos|bloqueado/).first()).toBeVisible()
+  }
+})
+
 test('sem sessão, páginas redirecionam ao login e APIs respondem 401', async ({ page, request }) => {
   await page.goto('/fechamento')
   await expect(page).toHaveURL(/\/login/)
@@ -46,10 +56,10 @@ test('Lançador da oficina: acessa a própria área, sem acesso a TI nem à audi
   const nav = page.getByRole('navigation', { name: 'Menu principal' })
   await expect(nav.getByRole('link', { name: 'Manutenção interna' })).toBeVisible()
   await expect(nav.getByRole('link', { name: 'Tecnologia da Informação' })).toHaveCount(0)
-  const r = await page.goto('/ti')
-  expect(r?.status()).not.toBe(200)
-  const a = await page.goto('/auditoria')
-  expect(a?.status()).not.toBe(200)
+  await page.goto('/ti')
+  await expect(page).toHaveURL(/\/acesso-negado/)
+  await page.goto('/auditoria')
+  await expect(page).toHaveURL(/\/acesso-negado/)
 })
 
 test('Gestor de TI: vê painel de TI e declarações do fechamento', async ({ page }) => {

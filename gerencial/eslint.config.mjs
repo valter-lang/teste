@@ -1,6 +1,8 @@
 import next from 'eslint-config-next'
 
-export default [
+const config = [
   ...next,
-  { ignores: ['.next/**', 'node_modules/**', 'playwright-report/**', 'test-results/**', 'next-env.d.ts'] },
+  { ignores: ['.next/**', '.next-e2e/**', 'node_modules/**', 'playwright-report/**', 'test-results/**', 'next-env.d.ts'] },
 ]
+
+export default config

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { SignJWT, jwtVerify } from 'jose'
 import { q } from '@/lib/db'
 import type { Acao, Atribuicao, UsuarioSessao } from './permissoes'
-import { exigir } from './permissoes'
+import { pode } from './permissoes'
 
 const COOKIE = 'cl_sessao'
 const DURACAO_H = 10
@@ -82,7 +82,7 @@ export async function exigirLogin(): Promise<UsuarioSessao> {
 export async function exigirPermissao(acao: Acao, area?: string | null): Promise<UsuarioSessao> {
   const u = await usuarioAtual()
   if (!u) redirect('/login')
-  exigir(u, acao, area)
+  if (!pode(u, acao, area)) redirect('/acesso-negado')
   return u
 }
 

@@ -27,8 +27,10 @@ export async function autenticar(email: string, senha: string): Promise<Resultad
   const ok = await conferirSenha(senha, u.senha_hash)
   if (!ok) {
     const n = u.tentativas_falhas + 1
-    await q(`update usuario set tentativas_falhas = $2, bloqueado_ate = case when $2 >= $3 then now() + ($4 || ' minutes')::interval end where id = $1`,
-      [u.id, n >= MAX_TENTATIVAS ? 0 : n, MAX_TENTATIVAS, String(BLOQUEIO_MIN)])
+    const bloquear = n >= MAX_TENTATIVAS
+    await q(`update usuario set tentativas_falhas = $2::int,
+               bloqueado_ate = case when $3::boolean then now() + make_interval(mins => $4::int) end where id = $1`,
+      [u.id, bloquear ? 0 : n, bloquear, BLOQUEIO_MIN])
     return erroGenerico
   }
   await q(`update usuario set tentativas_falhas = 0, bloqueado_ate = null, ultimo_login_em = now() where id = $1`, [u.id])
