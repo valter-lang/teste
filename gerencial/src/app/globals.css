@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+/* Tokens oficiais da identidade Costa Lavos */
+@theme {
+  --color-vinho: #6a1025;
+  --color-vermelho: #a41e22;
+  --color-tinta: #361319;
+  --color-escuro: #241015;
+  --color-creme: #f3efeb;
+  --color-dourado: #d6b46c;
+  --color-dourado-escuro: #8a6a1f;
+  --color-pedra: #c9c5c1;
+  --color-branco: #ffffff;
+  --color-marrom: #8b5e3c;
+  --color-rosa-claro: #e9d3d6;
+  /* Semáforo acessível (texto + ícone sempre acompanham a cor) */
+  --color-ok: #1f7a4a;
+  --color-ok-fundo: #e6f4ec;
+  --color-atencao: #8a5a00;
+  --color-atencao-fundo: #fbf1d9;
+  --color-critico: #a41e22;
+  --color-critico-fundo: #f8e3e3;
+  --color-neutro: #5f5a57;
+  --color-neutro-fundo: #efece9;
+
+  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  --font-titulo: 'Nunito', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
+  --font-capa: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  --radius-card: 0.625rem;
+  --shadow-card: 0 1px 2px rgb(36 16 21 / 0.06), 0 2px 8px rgb(36 16 21 / 0.05);
+}
+
+html {
+  background: var(--color-creme);
+  color: var(--color-escuro);
+  font-family: var(--font-sans);
+}
+body {
+  min-height: 100vh;
+}
+h1, h2, h3, .font-titulo {
+  font-family: var(--font-titulo);
+  color: var(--color-tinta);
+}
+
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 3px solid var(--color-dourado);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+@media print {
+  .nao-imprimir { display: none !important; }
+}
