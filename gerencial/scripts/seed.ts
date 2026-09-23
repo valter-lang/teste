@@ -43,6 +43,8 @@ const CONFIG: [string, unknown, string][] = [
   ['ranking.volume_minimo', 3, 'Volume mínimo para exibir um item em ranking.'],
   ['privacidade.anonimizar_nomes_diretoria', false, 'Substitui nomes de solicitantes/técnicos por iniciais nas visões da Diretoria.'],
   ['fechamento.areas_obrigatorias', ['MANUT_INTERNA', 'MANUT_EXTERNA', 'ESTOQUE_PECAS', 'COMODATO', 'TI'], 'Áreas cujo fechamento aprovado é exigido para o selo "Oficial".'],
+  ['ti.incluir_linear_nos_indicadores', false, 'Inclui chamados Linear/OPIVA (desenvolvimento) em SLA, MTTR, backlog, FCR e CSAT de TI (PENDENTE de decisão da Diretoria).'],
+  ['integracao.base_instalada.status_ativos', ['01'], 'Status AA3 considerados ativos na base instalada (PENDENTE de homologação).'],
   ['relatorio.fonte_exportacao', 'OFICIAL', 'OFICIAL usa Plus Jakarta Sans/Nunito; SEGURA usa Arial/Calibri para máquinas sem as fontes.'],
 ]
 

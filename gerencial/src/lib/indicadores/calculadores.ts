@@ -68,6 +68,17 @@ async function declaracao(ctx: ContextoCalculo, area: AreaCodigo, chave: string)
   return r ? r.valor : null
 }
 
+/** Origens de chamado consideradas nos indicadores de serviço de TI (Linear/OPIVA só se homologado). */
+function origensTi(ctx: ContextoCalculo): string[] {
+  return ctx.config['ti.incluir_linear_nos_indicadores'] === true ? ['TI', 'LINEAR', 'OUTRO'] : ['TI']
+}
+async function tiInformado(ctx: ContextoCalculo): Promise<boolean> {
+  const r = await q1<{ n: number }>(`select count(*)::int as n from chamado_ti where competencia = $1 and excluido_em is null and not dado_teste and sistema_origem = any($2)`, [ctx.comp, origensTi(ctx)], ctx.db)
+  if (r?.n) return true
+  const p = await q1<{ s: string }>(`select status as s from periodo_area where area_codigo = 'TI' and competencia = $1`, [ctx.comp], ctx.db)
+  return !!p && ['EM_VALIDACAO', 'APROVADO', 'FECHADO'].includes(p.s)
+}
+
 export const CALCULADORES: Record<string, Calculador> = {
   // ------------------------------------------------------------ Comodato / manutenção
   CO_BASE_ATIVA: {
@@ -275,8 +286,8 @@ export const CALCULADORES: Record<string, Calculador> = {
                 count(*) filter (where sla_violado is not null)::int as eleg,
                 count(*) filter (where sla_violado is null)::int as sem_info
            from chamado_ti where date_trunc('month', fechado_em at time zone 'America/Sao_Paulo')::date = $1
-            and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO' and elegivel_sla`, [ctx.comp], ctx.db)
-      if (!(await informado(ctx, 'TI')) && !r?.eleg) return naoInformado('Sem chamados de TI na competência.')
+            and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO' and elegivel_sla and sistema_origem = any($2)`, [ctx.comp, origensTi(ctx)], ctx.db)
+      if (!(await tiInformado(ctx)) && !r?.eleg) return naoInformado('Sem chamados de suporte de TI na competência.')
       return taxa(r?.ok ?? 0, r?.eleg ?? 0, 'EVENTOS', 100, { resolvidos_sem_marcacao_sla: r?.sem_info ?? 0, base: 'resolvidos no mês' }, 'chamados resolvidos elegíveis')
     },
   },
@@ -286,9 +297,9 @@ export const CALCULADORES: Record<string, Calculador> = {
       const rows = await q<{ aberto_em: Date; fechado_em: Date; pausa: number | null }>(
         `select aberto_em, fechado_em, sla_horas_pausadas::float8 as pausa from chamado_ti
           where date_trunc('month', fechado_em at time zone 'America/Sao_Paulo')::date = $1
-            and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO' and elegivel_sla`, [ctx.comp], ctx.db)
+            and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO' and elegivel_sla and sistema_origem = any($2)`, [ctx.comp, origensTi(ctx)], ctx.db)
       if (!rows.length) {
-        if (!(await informado(ctx, 'TI'))) return naoInformado('Sem chamados de TI na competência.')
+        if (!(await tiInformado(ctx))) return naoInformado('Sem chamados de suporte de TI na competência.')
         return naoAplicavel('Nenhum chamado resolvido na competência (denominador zero).')
       }
       let soma = 0
@@ -305,8 +316,8 @@ export const CALCULADORES: Record<string, Calculador> = {
         `select aberto_em from chamado_ti
           where excluido_em is null and not dado_teste and aberto_em <= $1
             and (fechado_em is null or fechado_em > $1) and status_normalizado not in ('CANCELADO')
-            and not (status_normalizado = 'RESOLVIDO' and fechado_em is null)`, [fim], ctx.db)
-      if (!(await informado(ctx, 'TI')) && !rows.length) return naoInformado('Sem chamados de TI registrados.')
+            and not (status_normalizado = 'RESOLVIDO' and fechado_em is null) and sistema_origem = any($2)`, [fim, origensTi(ctx)], ctx.db)
+      if (!(await tiInformado(ctx))) return naoInformado('Sem chamados de suporte de TI registrados na competência: a fotografia do backlog não é confiável.')
       const velhos = rows.filter((r) => diasUteisEntre(new Date(r.aberto_em), fim, ctx.cal) > limite).length
       return taxa(velhos, rows.length, 'EVENTOS', 100, { dias_uteis_limite: limite, backlog: rows.length }, 'backlog aberto')
     },
@@ -376,7 +387,7 @@ export const CALCULADORES: Record<string, Calculador> = {
     mes: async (ctx) => {
       const r = await q1<{ ok: number; marc: number }>(
         `select count(*) filter (where resolvido_primeiro_contato)::int as ok, count(*) filter (where resolvido_primeiro_contato is not null)::int as marc
-           from chamado_ti where competencia = $1 and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO'`, [ctx.comp], ctx.db)
+           from chamado_ti where competencia = $1 and excluido_em is null and not dado_teste and status_normalizado = 'RESOLVIDO' and sistema_origem = any($2)`, [ctx.comp, origensTi(ctx)], ctx.db)
       if (!r?.marc) return naoInformado('Chamados sem marcação de resolução no primeiro contato.')
       return taxa(r.ok, r.marc, 'EVENTOS', 100, undefined, 'chamados com marcação')
     },
@@ -385,7 +396,7 @@ export const CALCULADORES: Record<string, Calculador> = {
     tabelas: ['chamado_ti'],
     mes: async (ctx) => {
       const r = await q1<{ soma: number | null; n: number }>(
-        `select sum(csat_nota)::float8 as soma, count(csat_nota)::int as n from chamado_ti where competencia = $1 and excluido_em is null and not dado_teste`, [ctx.comp], ctx.db)
+        `select sum(csat_nota)::float8 as soma, count(csat_nota)::int as n from chamado_ti where competencia = $1 and excluido_em is null and not dado_teste and sistema_origem = any($2)`, [ctx.comp, origensTi(ctx)], ctx.db)
       if (!r?.n) return naoInformado('Nenhuma avaliação de satisfação respondida.')
       return taxa(r.soma ?? 0, r.n, 'EVENTOS', 1, undefined, 'respostas')
     },
