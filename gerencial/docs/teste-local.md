@@ -78,6 +78,7 @@ Excel e PowerPoint funcionam sem configuração extra. Para PDF, informe no `.en
 
 | Sintoma | Solução |
 |---|---|
+| PowerShell: `npm.ps1 não pode ser carregado ... execução de scripts foi desabilitada` | Rode uma vez `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` e responda S, ou use `npm.cmd` no lugar de `npm` |
 | `ECONNREFUSED ...5432` | O banco não está rodando: `docker compose up -d` (confira se o Docker Desktop está aberto) |
 | `SESSION_SECRET ausente ou curto` | Preencha `SESSION_SECRET` no `.env` com 32 caracteres ou mais |
 | Porta 3000 ocupada | `npm run dev -- -p 3001` e acesse http://localhost:3001 |
