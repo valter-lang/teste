@@ -24,6 +24,17 @@ npm ci
 docker compose up -d
 ```
 
+## 3b. Sem Docker: PostgreSQL instalado no Windows
+
+1. Baixe e instale o PostgreSQL 16 em https://www.postgresql.org/download/windows/ (instalador da EDB). Anote a senha do usuário `postgres` e mantenha a porta 5432.
+2. Abra o **SQL Shell (psql)** pelo menu Iniciar, tecle Enter nas perguntas até pedir a senha e informe a senha do `postgres`.
+3. Cole estes dois comandos:
+
+```sql
+create role gerencial login password 'gerencial';
+create database gerencial owner gerencial;
+```
+
 ## 4. Crie o arquivo `.env`
 
 Copie `.env.example` para `.env` (no Windows: `copy .env.example .env`; no Mac/Linux: `cp .env.example .env`) e deixe estas linhas assim:
@@ -79,6 +90,7 @@ Excel e PowerPoint funcionam sem configuração extra. Para PDF, informe no `.en
 | Sintoma | Solução |
 |---|---|
 | PowerShell: `npm.ps1 não pode ser carregado ... execução de scripts foi desabilitada` | Rode uma vez `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` e responda S, ou use `npm.cmd` no lugar de `npm` |
+| `O termo 'docker' não é reconhecido` | O Docker Desktop não está instalado (ou o terminal foi aberto antes da instalação). Instale, reinicie o computador, abra o Docker Desktop e abra um novo terminal. Ou use a opção sem Docker (seção 3b) |
 | `ECONNREFUSED ...5432` | O banco não está rodando: `docker compose up -d` (confira se o Docker Desktop está aberto) |
 | `SESSION_SECRET ausente ou curto` | Preencha `SESSION_SECRET` no `.env` com 32 caracteres ou mais |
 | Porta 3000 ocupada | `npm run dev -- -p 3001` e acesse http://localhost:3001 |

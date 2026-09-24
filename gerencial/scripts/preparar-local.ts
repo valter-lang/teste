@@ -17,6 +17,16 @@ import { seedDemo, USUARIOS_DEMO, SENHA_DEMO } from './seed-demo'
   console.log(`Usuários de teste (senha ${SENHA_DEMO}):`)
   for (const u of USUARIOS_DEMO) console.log(`  ${u.email.padEnd(32)} ${u.nome.replace('[DEMO] ', '')}`)
 })().catch((e) => {
-  console.error('Falha ao preparar:', e.message)
+  const codigo = e?.code ?? e?.errors?.[0]?.code
+  if (codigo === 'ECONNREFUSED') {
+    console.error('Falha ao preparar: não foi possível conectar ao PostgreSQL em localhost:5432.')
+    console.error('Suba o banco (Docker Desktop aberto + "docker compose up -d") ou instale o PostgreSQL. Veja docs/teste-local.md.')
+  } else if (codigo === '28P01') {
+    console.error('Falha ao preparar: usuário ou senha do banco incorretos. Confira DATABASE_URL no arquivo .env.')
+  } else if (codigo === '3D000') {
+    console.error('Falha ao preparar: o banco informado em DATABASE_URL não existe. Crie o banco "gerencial" (veja docs/teste-local.md).')
+  } else {
+    console.error('Falha ao preparar:', e?.message || codigo || e)
+  }
   process.exit(1)
 })
