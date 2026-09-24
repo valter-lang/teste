@@ -1,0 +1,15 @@
+# Banco PostgreSQL para TESTE LOCAL. Não use em produção.
+services:
+  banco:
+    image: postgres:16
+    container_name: costa-lavos-gerencial-db
+    environment:
+      POSTGRES_USER: gerencial
+      POSTGRES_PASSWORD: gerencial
+      POSTGRES_DB: gerencial
+    ports:
+      - "5432:5432"
+    volumes:
+      - dados_gerencial:/var/lib/postgresql/data
+volumes:
+  dados_gerencial:

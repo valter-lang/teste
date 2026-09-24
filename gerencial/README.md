@@ -18,6 +18,10 @@ Sistema web que substitui a planilha “Dashboard Executivo (Manutenção, Comod
 | [docs/operacao.md](docs/operacao.md) | Instalação, variáveis, backup, atualização, recuperação e retenção |
 | [docs/manual.md](docs/manual.md) | Manual curto para lançador, gestor e Diretoria |
 
+## Teste local rápido
+
+Passo a passo para Windows/Mac em [docs/teste-local.md](docs/teste-local.md): `docker compose up -d`, `npm run preparar:local`, `npm run dev` e acesse http://localhost:3000.
+
 ## Início rápido (desenvolvimento)
 
 Requisitos: Node.js 20+ e PostgreSQL 14+ (ou um projeto Supabase).

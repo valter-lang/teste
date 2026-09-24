@@ -13,11 +13,12 @@
     "db:seed": "tsx scripts/seed.ts",
     "db:seed-demo": "tsx scripts/seed-demo.ts",
     "worker": "tsx scripts/worker.ts",
-    "importar": "tsx scripts/importar-planilha.ts",
+    "importar": "tsx --env-file=.env scripts/importar-planilha.ts",
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "preparar:local": "tsx --env-file=.env scripts/preparar-local.ts"
   },
   "engines": {
     "node": ">=20"
